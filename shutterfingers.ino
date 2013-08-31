@@ -4,11 +4,15 @@
 // from a remote shutter release cable. See URL below for pinouts:
 // http://www.doc-diy.net/photo/remote_pinout/#canon
 
+// NOTE: all the pins are set to 0 because 
+// I HAVEN'T ACTUALLY TRIED RUNNING THIS CODE
+// yet
+
 #include <Servo.h> 
 
 Servo shutter_servo;  // create servo object to control a servo 
 
-// trigger inputs and corresponding servo positions
+// trigger inputs, corresponding servo positions, trigger states
 const int shutter_pin = 0;  // pin on which the shutter signal is received
 const int shutter_pos = 0;  // position at which the camera's shutter is release
 int shutter_state;          // status of the shutter signal
@@ -18,8 +22,8 @@ int focus_state;            // status of the focus signal
 const int safety_pos  = 0;  // safety position away from the shutter button
 
 // shutter servo details
-const int shutter_servo_pin   = 0;  // pin on which the servo is attached
-int shutter_servo_state;            // current state/position of the shutter servo
+const int shutter_servo_pin = 0;  // pin on which the servo is attached
+int shutter_servo_state;          // current state/position of the shutter servo
 
 void setup() 
 { 
@@ -62,6 +66,6 @@ void loop()
   }
 
   // sleep for some number of milliseconds, have some patience
-  delay(15);
+  delay( 15 );
 }
 
