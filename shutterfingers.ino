@@ -1,38 +1,37 @@
 // shutterfingers
 //
-// Positions a servo to depress the shutter button of a camera when triggered 
+// Positions a servo to depress the shutter button of a camera when triggered
 // from a remote shutter release cable. See URL below for pinouts:
 // http://www.doc-diy.net/photo/remote_pinout/#canon
 
-// NOTE: all the pins are set to 0 because 
+// NOTE: all the pins are set to 0 because
 // I HAVEN'T ACTUALLY TRIED RUNNING THIS CODE
 // yet
 
-#include <Servo.h> 
+#include <Servo.h>
 
-Servo shutter_servo;  // create servo object to control a servo 
-
-// trigger inputs, corresponding servo positions, trigger states
+// trigger inputs, corresponding servo positions, and states
 const int shutter_pin = 0;  // pin on which the shutter signal is received
 const int shutter_pos = 0;  // position at which the camera's shutter is release
 int shutter_state;          // status of the shutter signal
-const int focus_pin   = 0;  // pin on which the focus signal is received
-const int focus_pos   = 0;  // position at which the camera's autofocus is triggered
-int focus_state;            // status of the focus signal
-const int safety_pos  = 0;  // safety position away from the shutter button
+const int focus_pin   = 0;
+const int focus_pos   = 0;
+int focus_state;
+const int safety_pos  = 0;  // safety position servo position, away from the shutter button
 
 // shutter servo details
+Servo shutter_servo;              // create servo object to control a servo
 const int shutter_servo_pin = 0;  // pin on which the servo is attached
 int shutter_servo_state;          // current state/position of the shutter servo
 
-void setup() 
-{ 
+void setup()
+{
   shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
+  pinMode( shutter_pin, INPUT );
   pinMode( focus_pin, INPUT );
-  pinMode( focus_pin, INPUT );
-} 
+}
 
-void loop() 
+void loop()
 {
   // read the inputs
   shutter_state = digitalRead( shutter_pin );
