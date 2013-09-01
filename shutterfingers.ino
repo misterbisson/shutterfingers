@@ -2,7 +2,7 @@
 //
 // Positions a servo to depress the shutter button of a camera when triggered
 // from a remote shutter release cable. See URL below for pinouts:
-// http://www.doc-diy.net/photo/remote_pinout/#canon
+// http://www.doc-diy.net/photo/eos_wired_remote/
 
 // NOTE: all the pins are set to 0 because
 // I HAVEN'T ACTUALLY TRIED RUNNING THIS CODE
