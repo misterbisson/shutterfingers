@@ -4,20 +4,16 @@
 // from a remote shutter release cable. See URL below for pinouts:
 // http://www.doc-diy.net/photo/eos_wired_remote/
 
-// NOTE: all the pins are set to 0 because
-// I HAVEN'T ACTUALLY TRIED RUNNING THIS CODE
-// yet
-
 #include <Servo.h>
 
 // trigger inputs, corresponding servo positions, and states
 const int shutter_pin = 2;  // pin on which the shutter signal is received
-const int shutter_pos = 20; // position at which the camera's shutter is release
+const int shutter_pos = 20; // position at which the camera's shutter is released
 int shutter_state;          // status of the shutter signal
 const int focus_pin   = 4;
 const int focus_pos   = 30;
 int focus_state;
-const int safety_pos  = 60;  // safety position servo position, away from the shutter button
+const int safety_pos  = 60;  // safety position for the servo, away from the shutter button
 
 // shutter servo details
 Servo shutter_servo;              // create servo object to control a servo
