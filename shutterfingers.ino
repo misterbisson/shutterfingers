@@ -12,12 +12,12 @@
 
 // trigger inputs, corresponding servo positions, and states
 const int shutter_pin = 2;  // pin on which the shutter signal is received
-const int shutter_pos = 20;  // position at which the camera's shutter is release
+const int shutter_pos = 20; // position at which the camera's shutter is release
 int shutter_state;          // status of the shutter signal
 const int focus_pin   = 4;
 const int focus_pos   = 30;
 int focus_state;
-const int safety_pos  = 60  ;  // safety position servo position, away from the shutter button
+const int safety_pos  = 60;  // safety position servo position, away from the shutter button
 
 // shutter servo details
 Servo shutter_servo;              // create servo object to control a servo
@@ -47,7 +47,7 @@ void loop()
     if ( shutter_servo_state != shutter_pos )
     {
       shutter_servo.write( shutter_pos );
-      digitalWrite( led_pin, HIGH );  
+      digitalWrite( led_pin, HIGH );
       shutter_servo_state = shutter_pos;
     }
   }
@@ -56,7 +56,7 @@ void loop()
     if ( shutter_servo_state != focus_pos )
     {
       shutter_servo.write( focus_pos );
-      digitalWrite( led_pin, HIGH );  
+      digitalWrite( led_pin, HIGH );
       shutter_servo_state = focus_pos;
     }
   }
@@ -65,7 +65,7 @@ void loop()
     if ( shutter_servo_state != safety_pos )
     {
       shutter_servo.write( safety_pos );
-      digitalWrite( led_pin, LOW );  
+      digitalWrite( led_pin, LOW );
       shutter_servo_state = safety_pos;
     }
   }
