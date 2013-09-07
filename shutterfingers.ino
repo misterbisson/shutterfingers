@@ -11,24 +11,27 @@
 #include <Servo.h>
 
 // trigger inputs, corresponding servo positions, and states
-const int shutter_pin = 0;  // pin on which the shutter signal is received
-const int shutter_pos = 0;  // position at which the camera's shutter is release
+const int shutter_pin = 2;  // pin on which the shutter signal is received
+const int shutter_pos = 20;  // position at which the camera's shutter is release
 int shutter_state;          // status of the shutter signal
-const int focus_pin   = 0;
-const int focus_pos   = 0;
+const int focus_pin   = 4;
+const int focus_pos   = 30;
 int focus_state;
-const int safety_pos  = 0;  // safety position servo position, away from the shutter button
+const int safety_pos  = 60  ;  // safety position servo position, away from the shutter button
 
 // shutter servo details
 Servo shutter_servo;              // create servo object to control a servo
-const int shutter_servo_pin = 0;  // pin on which the servo is attached
+const int shutter_servo_pin = 7;  // pin on which the servo is attached
 int shutter_servo_state;          // current state/position of the shutter servo
+
+const int led_pin     = 13;  // to help with debugging
 
 void setup()
 {
   shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
   pinMode( shutter_pin, INPUT );
   pinMode( focus_pin, INPUT );
+  pinMode( led_pin, OUTPUT);
 }
 
 void loop()
@@ -44,14 +47,16 @@ void loop()
     if ( shutter_servo_state != shutter_pos )
     {
       shutter_servo.write( shutter_pos );
+      digitalWrite( led_pin, HIGH );  
       shutter_servo_state = shutter_pos;
     }
   }
-  else if ( HIGH == focus_pin )
+  else if ( HIGH == focus_state )
   {
     if ( shutter_servo_state != focus_pos )
     {
       shutter_servo.write( focus_pos );
+      digitalWrite( led_pin, HIGH );  
       shutter_servo_state = focus_pos;
     }
   }
@@ -60,6 +65,7 @@ void loop()
     if ( shutter_servo_state != safety_pos )
     {
       shutter_servo.write( safety_pos );
+      digitalWrite( led_pin, LOW );  
       shutter_servo_state = safety_pos;
     }
   }
