@@ -25,9 +25,9 @@ const int led_pin     = 13;  // to help with debugging
 void setup()
 {
   shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
-  pinMode( shutter_pin, INPUT );
-  pinMode( focus_pin, INPUT );
-  pinMode( led_pin, OUTPUT);
+  pinMode( shutter_pin, INPUT_PULLUP );
+  pinMode( focus_pin, INPUT_PULLUP );
+  pinMode( led_pin, OUTPUT );
 }
 
 void loop()
@@ -38,7 +38,7 @@ void loop()
 
   // determine where to send the servo
   // only reposition the servo if the new position is different from the previous
-  if ( HIGH == shutter_state )
+  if ( LOW == shutter_state )
   {
     if ( shutter_servo_state != shutter_pos )
     {
@@ -47,7 +47,7 @@ void loop()
       shutter_servo_state = shutter_pos;
     }
   }
-  else if ( HIGH == focus_state )
+  else if ( LOW == focus_state )
   {
     if ( shutter_servo_state != focus_pos )
     {
