@@ -17,17 +17,19 @@ const int safety_pos  = 60;  // safety position for the servo, away from the shu
 
 // shutter servo details
 Servo shutter_servo;              // create servo object to control a servo
-const int shutter_servo_pin = 7;  // pin on which the servo is attached
+const int shutter_servo_pin = 8;  // pin on which the servo is attached
 int shutter_servo_state;          // current state/position of the shutter servo
 
-const int led_pin     = 13;  // to help with debugging
+const int led_pin_external     = 6;   // to help with debugging
+const int led_pin_internal     = 13;  // to help with debugging
 
 void setup()
 {
   shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
   pinMode( shutter_pin, INPUT_PULLUP );
   pinMode( focus_pin, INPUT_PULLUP );
-  pinMode( led_pin, OUTPUT );
+  pinMode( led_pin_internal, OUTPUT );
+  pinMode( led_pin_external, OUTPUT );
 }
 
 void loop()
@@ -43,7 +45,8 @@ void loop()
     if ( shutter_servo_state != shutter_pos )
     {
       shutter_servo.write( shutter_pos );
-      digitalWrite( led_pin, HIGH );
+      digitalWrite( led_pin_internal, HIGH );
+      digitalWrite( led_pin_external, HIGH );
       shutter_servo_state = shutter_pos;
     }
   }
@@ -52,7 +55,8 @@ void loop()
     if ( shutter_servo_state != focus_pos )
     {
       shutter_servo.write( focus_pos );
-      digitalWrite( led_pin, HIGH );
+      digitalWrite( led_pin_internal, HIGH );
+      digitalWrite( led_pin_external, HIGH );
       shutter_servo_state = focus_pos;
     }
   }
@@ -61,7 +65,8 @@ void loop()
     if ( shutter_servo_state != safety_pos )
     {
       shutter_servo.write( safety_pos );
-      digitalWrite( led_pin, LOW );
+      digitalWrite( led_pin_internal, LOW );
+      digitalWrite( led_pin_external, LOW );
       shutter_servo_state = safety_pos;
     }
   }
@@ -69,4 +74,3 @@ void loop()
   // sleep for some number of milliseconds, have some patience
   delay( 15 );
 }
-
