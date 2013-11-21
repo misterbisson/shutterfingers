@@ -9,10 +9,10 @@ This code is written for ATtiny85 running on a Digispark board.
 See http://digistump.com/products/1
 
 Version 1 of the project can was written for a more common ATmega328
-or Atmega32U4-powered Arduino environment. It's still available from:
+or ATmega32U4-powered Arduino environment. It's still available from:
 https://github.com/misterbisson/shutterfingers/releases
 
-The ATtiny85 differs in a number if ways from ATmega328 and Atmega32U4 environments.
+The ATtiny85 differs in a number if ways from ATmega328 and ATmega32U4 environments.
 These two pages offer detail some of those differences:
 https://learn.sparkfun.com/tutorials/tiny-avr-programmer-hookup-guide/attiny85-use-hints
 http://digistump.com/wiki/digispark/tutorials/basics
