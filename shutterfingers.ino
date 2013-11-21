@@ -58,13 +58,13 @@ https://github.com/fri000/Servo8Bit
 */
 #include <SimpleServo.h>
 SimpleServo shutter_servo;        // create servo object to control a servo
-const int shutter_servo_pin = 4;  // pin on which the servo is attached
+const int shutter_servo_pin = 5;  // pin on which the servo is attached
 int shutter_servo_state;          // current state/position of the shutter servo
 
 /*
 Gotta have some LEDs
 */
-const int led_pin = 3;   // to help with debugging
+const int led_pin = 0;   // to help with debugging
 
 void setup()
 {
