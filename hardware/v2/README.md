@@ -3,7 +3,7 @@
 1. [Digispark](http://digistump.com/products/1)
 1. [Digispark proto shield](http://digistump.com/products/2)
 1. [servo](https://www.sparkfun.com/products/9065)
-1. [2.5mm panel mount phone jack](http://www.radioshack.com/product/index.jsp?productId=2103450)
+1. [2.5mm panel mount TRS jack](http://www.radioshack.com/product/index.jsp?productId=2103450)
 1. [LiPo battery, 400mAh](https://www.sparkfun.com/products/10718)
 1. [LiPo charger/booster](https://www.sparkfun.com/products/11231)
 1. [power switch](https://www.sparkfun.com/products/11975)
