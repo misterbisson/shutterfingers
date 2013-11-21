@@ -5,10 +5,10 @@ Positions a servo to depress the shutter button of a camera when triggered
 from a remote shutter release cable. See URL below for pinouts:
 http://www.doc-diy.net/photo/eos_wired_remote/
 
-This code is written for ATtiny85 running on a Digispark board. 
+This code is written for ATtiny85 running on a Digispark board.
 See http://digistump.com/products/1
 
-Version 1 of the project can was written for a more common ATmega328 
+Version 1 of the project can was written for a more common ATmega328
 or Atmega32U4-powered Arduino environment. It's still available from:
 https://github.com/misterbisson/shutterfingers/releases
 
@@ -18,19 +18,19 @@ https://learn.sparkfun.com/tutorials/tiny-avr-programmer-hookup-guide/attiny85-u
 http://digistump.com/wiki/digispark/tutorials/basics
 
 Regarding pins and pull-up (pullup) resistors on the Digispark and ATtiny85:
-  
+
 Quoting from http://digistump.com/wiki/digispark/tutorials/basics :
 
-  "Pin 3 (P3) has a 1.5 kΩ pull-up resistor attached to it which is required for 
-  when P3 and P4 are used for USB communication (including programming). Your design 
-  may need to take into account that you'd have to overpower this to pull this pin low."
+	"Pin 3 (P3) has a 1.5 kΩ pull-up resistor attached to it which is required for
+	when P3 and P4 are used for USB communication (including programming). Your design
+	may need to take into account that you'd have to overpower this to pull this pin low."
 
-  "The internal pull-up resistor are much weaker (about 25 kohm) on an ATtiny 
-  than on an Arduino, so the onboard LED interferes with them. If you need them, 
-  you can use a different port. Change your circuit to not need the internal 
-  pull-up, or cut the LED trace."
+	"The internal pull-up resistor are much weaker (about 25 kohm) on an ATtiny
+	than on an Arduino, so the onboard LED interferes with them. If you need them,
+	you can use a different port. Change your circuit to not need the internal
+	pull-up, or cut the LED trace."
 
-And because I think there are some typos in the above description about using 
+And because I think there are some typos in the above description about using
 the the internal pull-ups, I used the example in http://digistump.com/board/index.php/topic,1086.msg4553.html#msg4553
 when implementing them in this project.
 */
@@ -64,59 +64,54 @@ int shutter_servo_state;          // current state/position of the shutter servo
 /*
 Gotta have some LEDs
 */
-const int led_pin_external = 3;   // to help with debugging
-const int led_pin_internal = 3;   // to help with debugging
+const int led_pin = 3;   // to help with debugging
 
 void setup()
 {
-  shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
-  pinMode( shutter_pin, INPUT );
-  digitalWrite( shutter_pin, HIGH ); // activate internal pull-up
-  pinMode( focus_pin, INPUT );
-  digitalWrite( shutter_pin, HIGH ); // activate internal pull-up
-  pinMode( led_pin_internal, OUTPUT );
-  pinMode( led_pin_external, OUTPUT );
+	shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
+	pinMode( shutter_pin, INPUT );
+	digitalWrite( shutter_pin, HIGH ); // activate internal pull-up
+	pinMode( focus_pin, INPUT );
+	digitalWrite( shutter_pin, HIGH ); // activate internal pull-up
+	pinMode( led_pin, OUTPUT );
 }
 
 void loop()
 {
-  // read the inputs
-  shutter_state = digitalRead( shutter_pin );
-  focus_state   = digitalRead( focus_pin );
+	// read the inputs
+	shutter_state = digitalRead( shutter_pin );
+	focus_state   = digitalRead( focus_pin );
 
-  // determine where to send the servo
-  // only reposition the servo if the new position is different from the previous
-  if ( LOW == shutter_state )
-  {
-    if ( shutter_servo_state != shutter_pos )
-    {
-      shutter_servo.write( shutter_pos );
-      digitalWrite( led_pin_internal, HIGH );
-      digitalWrite( led_pin_external, HIGH );
-      shutter_servo_state = shutter_pos;
-    }
-  }
-  else if ( LOW == focus_state )
-  {
-    if ( shutter_servo_state != focus_pos )
-    {
-      shutter_servo.write( focus_pos );
-      digitalWrite( led_pin_internal, HIGH );
-      digitalWrite( led_pin_external, HIGH );
-      shutter_servo_state = focus_pos;
-    }
-  }
-  else
-  {
-    if ( shutter_servo_state != safety_pos )
-    {
-      shutter_servo.write( safety_pos );
-      digitalWrite( led_pin_internal, LOW );
-      digitalWrite( led_pin_external, LOW );
-      shutter_servo_state = safety_pos;
-    }
-  }
+	// determine where to send the servo
+	// only reposition the servo if the new position is different from the previous
+	if ( LOW == shutter_state )
+	{
+		if ( shutter_servo_state != shutter_pos )
+		{
+			shutter_servo.write( shutter_pos );
+			digitalWrite( led_pin, HIGH );
+			shutter_servo_state = shutter_pos;
+		}
+	}
+	else if ( LOW == focus_state )
+	{
+		if ( shutter_servo_state != focus_pos )
+		{
+			shutter_servo.write( focus_pos );
+			digitalWrite( led_pin, HIGH );
+			shutter_servo_state = focus_pos;
+		}
+	}
+	else
+	{
+		if ( shutter_servo_state != safety_pos )
+		{
+			shutter_servo.write( safety_pos );
+			digitalWrite( led_pin, LOW );
+			shutter_servo_state = safety_pos;
+		}
+	}
 
-  // sleep for some number of milliseconds, have some patience
-  delay( 15 );
+	// sleep for some number of milliseconds, have some patience
+	delay( 15 );
 }
