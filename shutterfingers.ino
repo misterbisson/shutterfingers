@@ -38,7 +38,7 @@ when implementing them in this project.
 /*
 Trigger inputs, corresponding servo positions, and states
 */
-const int shutter_pin = 1;  // pin on which the shutter signal is received
+const int shutter_pin = 0;  // pin on which the shutter signal is received
 const int shutter_pos = 65; // position at which the camera's shutter is released
 int shutter_state;          // status of the shutter signal
 const int focus_pin   = 2;
@@ -64,7 +64,7 @@ int shutter_servo_state;          // current state/position of the shutter servo
 /*
 Gotta have some LEDs
 */
-const int led_pin = 0;   // to help with debugging
+const int led_pin = 1;   // to help with debugging
 
 void setup()
 {
