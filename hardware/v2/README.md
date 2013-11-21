@@ -8,7 +8,7 @@
 1. [LiPo charger/booster](https://www.sparkfun.com/products/11231)
 1. [power switch](https://www.sparkfun.com/products/11975)
 1. [RGB cycling LED](https://www.sparkfun.com/products/11449)
-1. [Hot shoe to 1/4 threaded adapter](http://www.amazon.com/dp/B0088VQEV2/)
+1. [hot shoe to 1/4 threaded adapter](http://www.amazon.com/dp/B0088VQEV2/)
 1. [aluminum project box](http://www.amazon.com/gp/product/B0002BBQYG/)
 
 #### Fritzing parts libray ####
