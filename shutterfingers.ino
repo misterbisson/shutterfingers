@@ -53,7 +53,7 @@ when implementing them in this project.
 /*
 Trigger inputs, corresponding servo positions, and states
 */
-const int shutter_pin = 5;  // pin on which the shutter signal is received
+const int shutter_pin = 0;  // pin on which the shutter signal is received
 const int shutter_pos = 65; // position at which the camera's shutter is released
 int shutter_state;          // status of the shutter signal
 const int focus_pin   = 2;
@@ -73,23 +73,28 @@ https://github.com/fri000/Servo8Bit
 */
 #include <SimpleServo.h>
 SimpleServo shutter_servo;        // create servo object to control a servo
-const int shutter_servo_pin = 0;  // pin on which the servo is attached
+const int shutter_servo_pin = 5;  // pin on which the servo is attached
 int shutter_servo_state;          // current state/position of the shutter servo
 
 /*
-Gotta have some LEDs
+Gotta have an LED
 */
 const int led_pin = 1;   // to help with debugging
 
 void setup()
 {
-	shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
 	pinMode( shutter_pin, INPUT );
 	digitalWrite( shutter_pin, HIGH ); // activate internal pull-up
+
 	pinMode( focus_pin, INPUT );
 	digitalWrite( shutter_pin, HIGH ); // activate internal pull-up
+
 	pinMode( led_pin, OUTPUT );
-	digitalWrite( led_pin, LOW );
+	digitalWrite( led_pin, LOW ); // not necessary, but we're setting so many other pins...
+
+	shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
+	shutter_servo.write( safety_pos );
+	shutter_servo_state = safety_pos;
 }
 
 void loop()
