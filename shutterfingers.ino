@@ -53,13 +53,19 @@ when implementing them in this project.
 /*
 Trigger inputs, corresponding servo positions, and states
 */
-const int shutter_pin = 0;  // pin on which the shutter signal is received
+const int safety_pos  = 45; // safety position for the servo, away from the shutter button
+
+const int shutter_pin = 0;  // the number of the pushbutton pin
 const int shutter_pos = 65; // position at which the camera's shutter is released
-int shutter_state;          // status of the shutter signal
+const int shutter_led = 1;  // the number of the LED pin
+int shutter_state     = 0;  // variable for reading the pushbutton status
+
 const int focus_pin   = 2;
+const int focus_led   = 1;
 const int focus_pos   = 55;
-int focus_state;
-const int safety_pos  = 45;  // safety position for the servo, away from the shutter button
+int focus_state       = 0;
+
+int shutter_servo_state;
 
 /*
 Shutter servo details
@@ -74,65 +80,64 @@ https://github.com/fri000/Servo8Bit
 #include <SimpleServo.h>
 SimpleServo shutter_servo;        // create servo object to control a servo
 const int shutter_servo_pin = 5;  // pin on which the servo is attached
-int shutter_servo_state;          // current state/position of the shutter servo
 
-/*
-Gotta have an LED
-*/
-const int led_pin = 1;   // to help with debugging
 
 void setup()
 {
-	pinMode( shutter_pin, INPUT );
-	digitalWrite( shutter_pin, HIGH ); // activate internal pull-up
+  pinMode( shutter_pin, INPUT);     
+  digitalWrite( shutter_pin, HIGH ); // activate internal pull-up
+  pinMode( shutter_led, OUTPUT );      
+  digitalWrite( shutter_led, LOW ); // not necessary, but we're setting so many other pins...
 
-	pinMode( focus_pin, INPUT );
-	digitalWrite( shutter_pin, HIGH ); // activate internal pull-up
+  pinMode( focus_pin, INPUT);     
+  digitalWrite( focus_pin, HIGH );
+  pinMode( focus_led, OUTPUT );      
+  digitalWrite( focus_led, LOW );
 
-	pinMode( led_pin, OUTPUT );
-	digitalWrite( led_pin, LOW ); // not necessary, but we're setting so many other pins...
-
-	shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
-	shutter_servo.write( safety_pos );
-	shutter_servo_state = safety_pos;
+  shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
+  shutter_servo.write( safety_pos );
+  shutter_servo_state = safety_pos;
 }
 
 void loop()
 {
-	// read the inputs
-	shutter_state = digitalRead( shutter_pin );
-	focus_state   = digitalRead( focus_pin );
+  // read the inputs
+  focus_state = digitalRead( focus_pin );
+  shutter_state = digitalRead( shutter_pin );
 
-	// determine where to send the servo
-	// only reposition the servo if the new position is different from the previous
-	if ( LOW == shutter_state )
-	{
-		if ( shutter_servo_state != shutter_pos )
-		{
-			shutter_servo.write( shutter_pos );
-			digitalWrite( led_pin, HIGH );
-			shutter_servo_state = shutter_pos;
-		}
-	}
-	else if ( LOW == focus_state )
-	{
-		if ( shutter_servo_state != focus_pos )
-		{
-			shutter_servo.write( focus_pos );
-			digitalWrite( led_pin, HIGH );
-			shutter_servo_state = focus_pos;
-		}
-	}
-	else
-	{
-		if ( shutter_servo_state != safety_pos )
-		{
-			shutter_servo.write( safety_pos );
-			digitalWrite( led_pin, LOW );
-			shutter_servo_state = safety_pos;
-		}
-	}
+  // determine where to send the servo
+  // only reposition the servo if the new position is different from the previous
+  if ( LOW == shutter_state )
+  {     
+    if ( shutter_servo_state != shutter_pos )
+    {
+      shutter_servo.write( shutter_pos );
+      digitalWrite( focus_led, LOW );  
+      digitalWrite( shutter_led, HIGH );
+      shutter_servo_state = shutter_pos;
+    }
+  } 
+  else if ( LOW == focus_state )
+  {     
+    if ( shutter_servo_state != focus_pos )
+    {
+      shutter_servo.write( focus_pos );
+      digitalWrite( shutter_led, LOW );
+      digitalWrite( focus_led, HIGH );  
+      shutter_servo_state = focus_pos;
+    }
+  } 
+  else
+  {
+    if ( shutter_servo_state != safety_pos )
+    {
+      shutter_servo.write( safety_pos );
+      digitalWrite( shutter_led, LOW );
+      digitalWrite( focus_led, LOW ); 
+      shutter_servo_state = safety_pos;
+    }
+  }
 
-	// sleep for some number of milliseconds, have some patience
-	delay( 15 );
+  // sleep for some number of milliseconds, have some patience
+  delay( 15 );
 }
