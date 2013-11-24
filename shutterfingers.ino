@@ -28,8 +28,8 @@ Overview of pins, fromhttp://digistump.com/board/index.php/topic,986.0.html
 
 More about pins to avoid, from http://digistump.com/board/index.php/topic,1105.0.html
 
-	"I was saying that P5 is weak and useless as an output because 
-	it's the reset pin and it's said in the datasheet you can't get a lot 
+	"I was saying that P5 is weak and useless as an output because
+	it's the reset pin and it's said in the datasheet you can't get a lot
 	of current from it, voltage drops a lot when you drain even a few mAs."
 
 	"if you want to keep USB feature, P3/P4 must be kept"
@@ -84,14 +84,14 @@ const int shutter_servo_pin = 5;  // pin on which the servo is attached
 
 void setup()
 {
-  pinMode( shutter_pin, INPUT);     
+  pinMode( shutter_pin, INPUT );
   digitalWrite( shutter_pin, HIGH ); // activate internal pull-up
-  pinMode( shutter_led, OUTPUT );      
+  pinMode( shutter_led, OUTPUT );
   digitalWrite( shutter_led, LOW ); // not necessary, but we're setting so many other pins...
 
-  pinMode( focus_pin, INPUT);     
+  pinMode( focus_pin, INPUT );
   digitalWrite( focus_pin, HIGH );
-  pinMode( focus_led, OUTPUT );      
+  pinMode( focus_led, OUTPUT );
   digitalWrite( focus_led, LOW );
 
   shutter_servo.attach( shutter_servo_pin );  // attaches the servo on the defined pin to the servo object
@@ -108,32 +108,32 @@ void loop()
   // determine where to send the servo
   // only reposition the servo if the new position is different from the previous
   if ( LOW == shutter_state )
-  {     
+  {
     if ( shutter_servo_state != shutter_pos )
     {
       shutter_servo.write( shutter_pos );
-      digitalWrite( focus_led, LOW );  
+      digitalWrite( focus_led, LOW );
       digitalWrite( shutter_led, HIGH );
       shutter_servo_state = shutter_pos;
     }
-  } 
+  }
   else if ( LOW == focus_state )
-  {     
+  {
     if ( shutter_servo_state != focus_pos )
     {
       shutter_servo.write( focus_pos );
       digitalWrite( shutter_led, LOW );
-      digitalWrite( focus_led, HIGH );  
+      digitalWrite( focus_led, HIGH );
       shutter_servo_state = focus_pos;
     }
-  } 
+  }
   else
   {
     if ( shutter_servo_state != safety_pos )
     {
       shutter_servo.write( safety_pos );
       digitalWrite( shutter_led, LOW );
-      digitalWrite( focus_led, LOW ); 
+      digitalWrite( focus_led, LOW );
       shutter_servo_state = safety_pos;
     }
   }
