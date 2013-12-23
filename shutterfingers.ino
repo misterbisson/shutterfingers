@@ -56,13 +56,13 @@ Trigger inputs, corresponding servo positions, and states
 const int safety_pos  = 45; // safety position for the servo, away from the shutter button
 
 const int shutter_pin = 0;  // the number of the pushbutton pin
-const int shutter_pos = 65; // position at which the camera's shutter is released
+const int shutter_pos = 33; // position at which the camera's shutter is released
 const int shutter_led = 1;  // the number of the LED pin
 int shutter_state     = 0;  // variable for reading the pushbutton status
 
 const int focus_pin   = 2;
 const int focus_led   = 1;
-const int focus_pos   = 55;
+const int focus_pos   = 37;
 int focus_state       = 0;
 
 int shutter_servo_state;
